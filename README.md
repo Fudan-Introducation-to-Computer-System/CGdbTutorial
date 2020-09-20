@@ -1,5 +1,5 @@
 # C语言
-> 上一次，我们讲了一些简单的内容，希望同学们有完成上次布置的练习。这节课，我们主要讲讲struct和union, 指针，还有malloc，以及GDB。还是扯几句题外话吧，目前，C语言还是非常流行的。我们班有同学去华为工作，主要也是写C代码，为什么C语言还是这么流行呢？可以看看博客： https://www.tomorrow.wiki/archives/1893 。C语言适用于对性能要求非常高和偏底层的一些领域。所以，万一同学们去了菊厂，那今天多学一点C肯定是有帮助的。相信我们复旦的同学，一定能把C语言轻松搞定！         —— 谢东方
+> 上一次，我们讲了一些简单的内容，希望同学们有完成上次布置的练习。这节课，我们主要讲讲struct和union, 指针，以及GDB。malloc和free留在下节课讲。还是扯几句题外话吧，目前，C语言还是非常流行的。我们班有同学去华为工作，主要也是写C代码，为什么C语言还是这么流行呢？可以看看博客： https://www.tomorrow.wiki/archives/1893 。C语言适用于对性能要求非常高和偏底层的一些领域。所以，万一同学们去了菊厂，那今天多学一点C肯定是有帮助的。相信我们复旦的同学，一定能把C语言轻松搞定！         —— 谢东方
 
 ## 指针
 > 指针是C语言中比较难的内容，我记得我之前学面向对象的时候，被指针坑惨了。不过，学懂之后，你就知道，还是有掌握的可能的。
@@ -76,8 +76,61 @@ int main(int argc, char** argv) {
 所以，你可以明白char** argv，实际上可以理解为char[][] argv，char[]可以理解为字符串，所以char[][]相当于Java里面的String[] argv。
 
 ## struct & union
-> struct扮演了类似于Java类中数据的角色,union主要是为了省空间。在一些极端情况下是非常有用的。
-```
+> struct扮演了类似于Java类中数据的角色；union主要是为了省空间，在一些极端情况下是非常有用的。
+
+直接看下面这个struct实例吧，它实现了一个链表。
+```C
+#include <stdio.h>
+#include <stdlib.h> // 包含malloc和free函数
+
+struct ListNode {
+    int val;
+    struct ListNode* next;
+}; // 定义一个struct。
+
+int main(int argc, char** argv) {
+    struct ListNode head = {1, NULL}; // 声明一个变量，必须带上struct才行。
+    struct ListNode* headPtr = &head; // 获取指针。
+    printf("head value: %d\n", headPtr->val); // 指针可以通过"->"调用成员
+    printf("head value: %d\n", head.val); // struct通过"."调用成员
+
+    // 构建一个链表
+    struct ListNode* tmp = headPtr;
+    for (int i = 0 ; i < 2; i++) {
+        struct ListNode* node = (struct ListNode*)malloc(sizeof(struct ListNode)); // 通过malloc在堆上分配空间。
+        // 如果使用临时变量可能会被覆盖，所以选用malloc不会出现意想不到的bug。
+        node->val = tmp->val+1;
+        node->next = NULL;
+
+        tmp->next = node;
+        tmp = tmp->next;
+    }
+    // 遍历这个链表
+    tmp = headPtr;
+    printf("value: ");
+    while(tmp != NULL) {
+        printf("%d ", tmp->val);
+        tmp = tmp->next;
+    }
+    printf("\n");
+
+    // 释放内存
+    tmp = headPtr->next;
+    for (int i = 0 ; i < 2; i++) {
+        struct ListNode* tmp1 = tmp->next;
+        free(tmp);
+        tmp = tmp1;
+    }
+    return 0;
+}
 
 ```
+
+好了，有兴趣的同学用C语言完成这个问题，链接： https://leetcode-cn.com/problems/intersection-of-two-linked-lists 。这个练习非常简单，适合巩固所学的知识。
+
+接下来是union，它是一个联合体。大家直接参考这个教程吧，不然，我这个篇幅太长了。参考：http://c.biancheng.net/cpp/html/2932.html 。
+
+
+# GDB
+
 
