@@ -132,5 +132,6 @@ int main(int argc, char** argv) {
 
 
 # GDB
+GDB的用法，参考这篇文章：https://blog.csdn.net/haoel/article/details/2879 。因为写得很好，我想如果让我再写，可能会把大家绕晕，得不偿失。所以，大家直接看博客吧。
 
-
+最后建议大家多用C语言写一写程序，熟能生巧，后面就不会太吃力。
