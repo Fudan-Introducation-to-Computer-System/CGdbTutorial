@@ -134,4 +134,27 @@ int main(int argc, char** argv) {
 # GDB
 GDB的用法，参考这篇文章：https://blog.csdn.net/haoel/article/details/2879 。因为写得很好，我想如果让我再写，可能会把大家绕晕，得不偿失。所以，大家直接看博客吧。
 
+## 总结
+请先看博客再看总结。
+1. 编译时添加-g参数，方便进行调试。如gcc -g hello.c -o hello。
+2. 进入gdb进行调试，gdb hello。
+3. 添加断点。
+    * 使用"l"命令-list，列出原程序。
+    * 添加断点
+        - break <line-number>，例如break 4
+        - break <function-name>，例如break main
+    * 查看断点
+        - info break
+4. 输入'r' - run运行
+5. 打印信息
+    * p argc
+    * p argv
+    * p argv[0]
+    * p argv[0][0]
+6. 输入'n'-next，下一个断点。
+7. 输入'bt'，查看堆栈。
+8. 输入'finish'，退出函数。
+9. 输入'c'-continue，继续运行。
+10. 输入'q' - quit，退出程序。
+
 最后建议大家多用C语言写一写程序，熟能生巧，后面就不会太吃力。
